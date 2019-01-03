@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express
+  labels:
+    component: mongo-express
+    role: backend
+spec:
+  selector:
+    component: mongo-express
+    role: backend
+  ports:
+  - name: http
+    port: 1234
+    protocol: TCP
+  type: NodePort

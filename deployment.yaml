@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-express
+  labels:
+    component: mongo-express
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: gcr.io/plural-computing/mongo-express:latest
+        imagePullPolicy: Always
+        env:
+        - name: ENVIRONMENT
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MONGODB_ADDRESS
+          value: '35.205.208.250'
+        - name: VCAP_APP_PORT
+          value: '1234'
+        - name: ME_CONFIG_MONGODB_SERVER
+          value: 'localhost'
+        - name: ME_CONFIG_MONGODB_PORT
+          value: '35800'
+        - name: ME_CONFIG_BASICAUTH_USERNAME
+          value: 'john'
+        - name: ME_CONFIG_BASICAUTH_PASSWORD
+          value: '12345678'
+        volumeMounts:
+        - name: service-account-google-cloud
+          mountPath: "/etc/service-account-google-cloud"
+          readOnly: true
+        - name: vm-ssh-key
+          mountPath: "/etc/vm-ssh-key"
+          readOnly: true
+        - name: mongo-user
+          mountPath: "/etc/mongo-user"
+          readOnly: true
+      volumes:
+      - name: service-account-google-cloud
+        secret:
+          secretName: service-account-google-cloud
+      - name: vm-ssh-key
+        secret:
+          secretName: vm-ssh-key
+      - name: mongo-user
+        secret:
+          secretName: mongo-user
