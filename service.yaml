@@ -5,12 +5,35 @@ metadata:
   labels:
     component: mongo-express
     role: backend
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: AuthService
+      name: authentication
+      auth_service: "ambassador-auth:80"
+      path_prefix: "/extauth"
+      allowed_headers: []
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  mongo-express-staging
+      host: mongo.staging.c.plural.ai
+      prefix: /
+      service: mongo-express.staging:1234
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  mongo-express-production
+      host: mongo.c.plural.ai
+      prefix: /
+      service: mongo-express.production:1234
 spec:
   selector:
     component: mongo-express
-    role: backend
   ports:
   - name: http
     port: 1234
     protocol: TCP
   type: NodePort
+  

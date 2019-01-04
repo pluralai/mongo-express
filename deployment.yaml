@@ -15,6 +15,11 @@ spec:
       - name: mongo-express
         image: gcr.io/plural-computing/mongo-express:latest
         imagePullPolicy: Always
+        readinessProbe:
+          initialDelaySeconds: 10
+          httpGet:
+            path: /
+            port: 1234
         env:
         - name: ENVIRONMENT
           valueFrom:
@@ -23,14 +28,14 @@ spec:
         - name: VCAP_APP_PORT
           value: '1234'
         - name: ME_CONFIG_MONGODB_SERVER
-          value: 'mgo-replicaset'
+          value: 'mongo-0.mongo-gvr'
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom:
             secretKeyRef:
-              name: mgo-replicaset-auth
+              name: mongo-express
               key: username
         - name: ME_CONFIG_MONGODB_ADMINPASSWORD
           valueFrom:
             secretKeyRef:
-              name: mgo-replicaset-auth
+              name: mongo-express
               key: password
