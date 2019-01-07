@@ -29,6 +29,10 @@ spec:
           value: '1234'
         - name: ME_CONFIG_MONGODB_SERVER
           value: 'mongo-0.mongo-gvr'
+        - name: ME_CONFIG_BASICAUTH_USERNAME
+          value: 'admin'
+        - name: ME_CONFIG_BASICAUTH_PASSWORD
+          value: 'mongoisfunnotannoyinghonest'
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom:
             secretKeyRef:
