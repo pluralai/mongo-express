@@ -12,34 +12,30 @@ spec:
         component: mongo-express
     spec:
       containers:
-      - name: mongo-express
-        image: gcr.io/plural-computing/mongo-express:latest
-        imagePullPolicy: Always
-        readinessProbe:
-          initialDelaySeconds: 10
-          httpGet:
-            path: /
-            port: 1234
-        env:
-        - name: ENVIRONMENT
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: VCAP_APP_PORT
-          value: '1234'
-        - name: ME_CONFIG_MONGODB_SERVER
-          value: 'mongo-0.mongo-gvr'
-        - name: ME_CONFIG_BASICAUTH_USERNAME
-          value: 'admin'
-        - name: ME_CONFIG_BASICAUTH_PASSWORD
-          value: 'mongoisfunnotannoyinghonest'
-        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongo-express
-              key: username
-        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongo-express
-              key: password
+        - name: mongo-express
+          image: gcr.io/plural-computing/mongo-express:latest
+          imagePullPolicy: Always
+          readinessProbe:
+            initialDelaySeconds: 10
+            httpGet:
+              path: /
+              port: 1234
+          env:
+            - name: ENVIRONMENT
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: VCAP_APP_PORT
+              value: "1234"
+            - name: ME_CONFIG_MONGODB_SERVER
+              value: 'mongo-router'
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-express
+                  key: username
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-express
+                  key: password

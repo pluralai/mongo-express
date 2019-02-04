@@ -10,15 +10,15 @@ metadata:
       ---
       apiVersion: ambassador/v0
       kind:  Mapping
-      name:  mongo-express-staging
-      host: mongo.staging.c.plural.ai
+      name:  mongo-express-staging-new
+      host: mongo.staging.plural.ai
       prefix: /
       service: mongo-express.staging:1234
       ---
       apiVersion: ambassador/v0
       kind:  Mapping
-      name:  mongo-express-production
-      host: mongo.c.plural.ai
+      name:  mongo-express-production-new
+      host: mongo.plural.ai
       prefix: /
       service: mongo-express.production:1234
 spec:
@@ -29,4 +29,3 @@ spec:
     port: 1234
     protocol: TCP
   type: NodePort
-  
